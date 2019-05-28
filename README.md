@@ -7,4 +7,4 @@ Steps:
 5. ./sendevent.sh
 
 ## TODO:
-check network status
+deal with network disconnect
