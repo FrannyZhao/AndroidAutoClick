@@ -6,5 +6,4 @@ Steps:
 4. ./getevent2sendevent.sh
 5. ./sendevent.sh
 
-## TODO:
-deal with network disconnect
+Need to modify coordinate according to your phone.

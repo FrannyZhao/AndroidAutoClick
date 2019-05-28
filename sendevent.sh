@@ -38,8 +38,34 @@ function checkNetwork() {
     echo "Network connected" >> $logFile
   else
     echo "Network disconnect" >> $logFile
-    exit 1
+    echo "Retry..." >> $logFile
+    connectNetwork
+    $adbCmd ping -c 3 -w 10 www.baidu.com >> $logFile 2>&1
+    if [ $? = 0 ]; then
+      echo "Network connected after retry" >> $logFile
+    else
+      echo "Network disconnect after retry" >> $logFile
+      exit 1
+    fi
   fi
+}
+
+function connectNetwork() {
+  $adbCmd input keyevent KEYCODE_POWER
+  sleep 3s
+  $adbCmd input tap 730 2463
+  sleep 3s
+  $adbCmd am start -a android.settings.WIFI_SETTINGS
+  sleep 5s
+  $adbCmd input tap 500 700
+  sleep 5s
+  $adbCmd input tap 1000 785
+  sleep 8s
+  $adbCmd input tap 640 1535
+  sleep 5s
+  $adbCmd input keyevent KEYCODE_HOME
+  sleep 2s
+  $adbCmd input keyevent KEYCODE_POWER
 }
 
 #check adb
